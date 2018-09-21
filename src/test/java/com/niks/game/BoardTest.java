@@ -59,10 +59,10 @@ public class BoardTest {
         Assert.assertThat(board.getCurrentPlayer().getPits()[pitSize - 1], Matchers.equalTo(1));
         // opp all pits are unchanged
         for (int i = 0; i < pitSize - 1; i++) {
-            Assert.assertThat(board.getOpponentPlayer().getPits()[i], Matchers.equalTo(6));
+            Assert.assertThat(board.getPlayer2().getPits()[i], Matchers.equalTo(6));
         }
         //opp big pit is 0
-        Assert.assertThat(board.getOpponentPlayer().getPits()[pitSize - 1], Matchers.equalTo(0));
+        Assert.assertThat(board.getPlayer2().getPits()[pitSize - 1], Matchers.equalTo(0));
     }
 
     @Test
@@ -85,6 +85,6 @@ public class BoardTest {
     private Board createBoard(String userId1, String userId2) {
         Player player = new Player(userId1);
         Player opponentPlayer = new Player(userId2);
-        return new Board(player,opponentPlayer);
+        return new Board(player,opponentPlayer,7);
     }
 }

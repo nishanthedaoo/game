@@ -27,7 +27,7 @@ public class GameController {
 
     @RequestMapping("/play")
     @ResponseBody
-        public Board play(String boardID,String currentPlayerID,int selectedPit) throws InvalidGameActionException {
+        public Board play(String boardID,String currentPlayerID,int selectedPit) throws Exception {
 
          return  gameService.play(boardID,currentPlayerID,selectedPit);
 
