@@ -10,11 +10,18 @@
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
-.idea
-*.iws
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
 *.iml
-*.ipr
+*.iws
+target/
+log/
+logs/
 
 ### NetBeans ###
 /nbproject/private/
