@@ -25,7 +25,8 @@ public class GameServiceTest {
         Board board2=gameService.play(board1.getBoardId(),"karishma",1);
         System.out.println(board2);
 
-        System.out.println("fssdf");
+        System.out.println("fssdf new");
+
 
 
 
