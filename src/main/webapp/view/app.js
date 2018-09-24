@@ -1,5 +1,9 @@
 var app = angular.module('app',[]);
-
+app.filter('reverse', function() {
+  return function(items) {
+    return items.slice().reverse();
+  };
+});
 app.controller('UserCRUDCtrl', ['$scope','UserCRUDService', function ($scope,UserCRUDService) {
 	  
     $scope.updateUser = function () {
@@ -110,7 +114,7 @@ app.service('UserCRUDService',['$http', function ($http) {
             return $http({
               method: 'GET',
               url: 'startGame/',
-              params: {player1: player1Id,player2:player1Id}
+              params: {player1: player1Id,player2:player2Id}
             });
     	}
 	

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="app">
 <head>
+    <link rel="stylesheet" type="text/css" href="view/css/style.css">
 <meta charset="ISO-8859-1">
 <title>User CRUD</title>
 <script
@@ -27,6 +28,20 @@ a {
 					<td><button class="btn" type="submit" ng-model="start" ng-click="startGame(player1.id,player2.id)">Start</button></td>
 				</tr>
 			</table>
+
+        <table>
+            <tr >
+                <td>Player1</td>
+            <td ng-repeat="pit in board.player1.pits | orderBy:-'$index' track by $index" > <button class="btn" type="submit" class="opponentPlayerPit" ng-disabled="board.player2.playerId==board.currentPlayer.playerId">{{pit}}</button></td>
+            </tr>
+        </table>
+
+        <table>
+            <tr >
+                <td ng-repeat="pit in board.player2.pits  track by $index" > <button class="btn" type="submit" class="opponentPlayerPit" ng-disabled="board.player1.playerId==board.currentPlayer.playerId">{{pit}}</button></td>
+                <td><td>Player2</td></td>
+            </tr>
+        </table>
 
 
 			<br /> <br /> 
