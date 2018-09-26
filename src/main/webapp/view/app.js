@@ -4,43 +4,15 @@ app.filter('reverse', function() {
     return items.slice().reverse();
   };
 });
-app.controller('UserCRUDCtrl', ['$scope','UserCRUDService', function ($scope,UserCRUDService) {
+app.controller('GameController', ['$scope','GameService', function ($scope,GameService) {
 	  
-    $scope.updateUser = function () {
-        UserCRUDService.updateUser($scope.user.id,$scope.user.name,$scope.user.email)
-          .then(function success(response){
-              $scope.message = 'User data updated!';
-              $scope.errorMessage = '';
-          },
-          function error(response){
-              $scope.errorMessage = 'Error updating user!';
-              $scope.message = '';
-          });
-    }
+
     
-    $scope.getUser = function () {
-        var id = $scope.user.id;
-        UserCRUDService.getUser($scope.user.id)
-          .then(function success(response){
-              $scope.user = response.data;
-              $scope.user.id = id;
-              $scope.message='';
-              $scope.errorMessage = '';
-          },
-          function error (response ){
-              $scope.message = '';
-              if (response.status === 404){
-                  $scope.errorMessage = 'User not found!';
-              }
-              else {
-                  $scope.errorMessage = "Error getting user!";
-              }
-          });
-    }
+
         $scope.startGame = function () {
-            alert("sdfsdf");
+
             var id = $scope.player1.id;
-            UserCRUDService.startGame($scope.player1.id,$scope.player2.id)
+            GameService.startGame($scope.player1.id,$scope.player2.id)
               .then(function success(response){
                   $scope.board = response.data;
                  console.log($scope.board);
@@ -55,61 +27,33 @@ app.controller('UserCRUDCtrl', ['$scope','UserCRUDService', function ($scope,Use
                   }
               });
         }
-    
-    $scope.addUser = function () {
-        if ($scope.user != null && $scope.user.name) {
-            UserCRUDService.addUser($scope.user.name, $scope.user.email)
-              .then (function success(response){
-                  $scope.message = 'User added!';
-                  $scope.errorMessage = '';
-              },
-              function error(response){
-                  $scope.errorMessage = 'Error adding user!';
-                  $scope.message = '';
-            });
-        }
-        else {
-            $scope.errorMessage = 'Please enter a name!';
-            $scope.message = '';
-        }
-    }
-    
-    $scope.deleteUser = function () {
-        UserCRUDService.deleteUser($scope.user.id)
-          .then (function success(response){
-              $scope.message = 'User deleted!';
-              $scope.user = null;
-              $scope.errorMessage='';
-          },
-          function error(response){
-              $scope.errorMessage = 'Error deleting user!';
-              $scope.message='';
-          })
-    }
-    
-    $scope.getAllUsers = function () {
-        UserCRUDService.getAllUsers()
-          .then(function success(response){
-              $scope.users = response.data._embedded.users;
-              $scope.message='';
-              $scope.errorMessage = '';
-          },
-          function error (response ){
-              $scope.message='';
-              $scope.errorMessage = 'Error getting users!';
-          });
-    }
+
+             $scope.playGame = function (index) {
+
+                      var id = $scope.player1.id;
+                                GameService.playGame($scope.board.boardId,$scope.board.currentPlayer.playerId,index)
+                                  .then(function success(response){
+                                      $scope.board = response.data;
+                                     console.log($scope.board);
+                                  },
+                                  function error (response ){
+                                      $scope.message = '';
+                                      if (response.status === 404){
+                                          $scope.errorMessage = 'User not found!';
+                                      }
+                                      else {
+                                          $scope.errorMessage = "Error getting user!";
+                                      }
+                                  });
+
+                }
+
 
 }]);
 
-app.service('UserCRUDService',['$http', function ($http) {
-	
-    this.getUser = function getUser(userId){
-        return $http({
-          method: 'GET',
-          url: 'users/'+userId
-        });
-	}
+app.service('GameService',['$http', function ($http) {
+
+
 	 this.startGame = function startGame(player1Id,player2Id){
             return $http({
               method: 'GET',
@@ -117,35 +61,13 @@ app.service('UserCRUDService',['$http', function ($http) {
               params: {player1: player1Id,player2:player2Id}
             });
     	}
-	
-    this.addUser = function addUser(name, email){
-        return $http({
-          method: 'POST',
-          url: 'users',
-          data: {name:name, email:email}
-        });
-    }
-	
-    this.deleteUser = function deleteUser(id){
-        return $http({
-          method: 'DELETE',
-          url: 'users/'+id
-        })
-    }
-	
-    this.updateUser = function updateUser(id,name,email){
-        return $http({
-          method: 'PATCH',
-          url: 'users/'+id,
-          data: {name:name, email:email}
-        })
-    }
-	
-    this.getAllUsers = function getAllUsers(){
-        return $http({
-          method: 'GET',
-          url: 'users'
-        });
-    }
+	 this.playGame = function playGame(boardId,playerId,index){
+                return $http({
+                  method: 'GET',
+                  url: 'play/',
+                  params: {boardID: boardId,currentPlayerID:playerId,selectedPit:index}
+                });
+        	}
+
 
 }]);

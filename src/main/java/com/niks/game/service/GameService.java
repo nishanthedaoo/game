@@ -23,7 +23,6 @@ public class GameService {
     }
 
     public  Board play(String boardID,String currentPlayer,int selectedPit) throws Exception {
-        System.out.println(boardID);
 
         Board board=boardManager.boards.get(boardID);
         board=board.play(board.getPlayerById(currentPlayer), selectedPit);
