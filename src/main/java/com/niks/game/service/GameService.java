@@ -15,15 +15,14 @@ public class GameService {
 
             Player player = new Player(player1);
             Player opponentPlayer = new Player(player2);
-        Board board=new Board(player,opponentPlayer);
+        Board board=new Board(player,opponentPlayer,7);
         boardManager.boards.put(board.getBoardId(),board);
         return board;
 
 
     }
 
-    public  Board play(String boardID,String currentPlayer,int selectedPit) throws InvalidGameActionException {
-        System.out.println(boardID);
+    public  Board play(String boardID,String currentPlayer,int selectedPit) throws Exception {
 
         Board board=boardManager.boards.get(boardID);
         board=board.play(board.getPlayerById(currentPlayer), selectedPit);
