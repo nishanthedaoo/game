@@ -67,9 +67,7 @@ public class Board {
                 setNextPlayer(selectedPlayer, lastIndex);
                 updateGameStatus();
             }
-            else{
-                throw new Exception("sleted pit is zero");
-            }
+
 
 
         }
